@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+function mkt(){
+  mkdir -p {nmap,content,exploits,data}
+}
+mkt

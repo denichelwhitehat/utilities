@@ -1,0 +1,58 @@
+#!/bin/bash
+
+
+#Colours
+greenColour="\e[0;32m\033[1m"
+endColour="\033[0m\e[0m"
+redColour="\e[0;31m\033[1m"
+blueColour="\e[0;34m\033[1m"
+yellowColour="\e[0;33m\033[1m"
+purpleColour="\e[0;35m\033[1m"
+turquoiseColour="\e[0;36m\033[1m"
+grayColour="\e[0;37m\033[1m"
+
+
+
+trap ctrl_c INT
+
+
+
+function ctrl_c(){
+	echo -e "\n${redColour}[!] Exiting...\n${endColour}"
+  tput cnorm; exit 1
+}
+
+
+ip=$1
+
+
+function seted(){
+
+  if [[ $ip = '' ]];then
+    echo -e "No has especificado la ip"; exit 1
+  fi
+
+} 
+seted
+
+
+function return_ttl_os_name(){
+
+  p=$(ping -c 1 $ip);echo $p > tmp.tmp
+  ttl=$(cat tmp.tmp | awk '{print $12}' | tr '=' ' ' | awk '{print $2}')
+
+  if [[ $ttl -ge 0 && $ttl -le 64 ]]; then
+    echo -e "\n$ip -> Linux"
+  elif [[ $ttl -ge 65 && $ttl -le 128 ]]; then
+    echo -e "\n$ip -> Windows"
+  else
+    echo -e "\nUnknow"
+  fi
+
+}
+
+return_ttl_os_name
+
+echo $(shred -uvz tmp.tmp)
+echo $(rm tmp.tmp)
+
