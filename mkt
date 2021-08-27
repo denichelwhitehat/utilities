@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Author @You_Can_H4ck
 
 function mkt(){
   mkdir -p {nmap,content,exploits,data}
