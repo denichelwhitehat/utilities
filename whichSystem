@@ -31,7 +31,7 @@ ip=$1
 function seted(){
 
   if [[ $ip = '' ]];then
-    echo -e "No has especificado la ip"; exit 1
+    echo -e "You have not specified the ip"; exit 1
   fi
 
 } 
@@ -40,8 +40,8 @@ seted
 
 function return_ttl_os_name(){
 
-  p=$(ping -c 1 $ip);echo $p > tmp.tmp
-  ttl=$(cat tmp.tmp | awk '{print $12}' | tr '=' ' ' | awk '{print $2}')
+  p=$(ping -c 1 $ip);echo $p > /tmp/tmp.tmp
+  ttl=$(cat /tmp/tmp.tmp | awk '{print $12}' | tr '=' ' ' | awk '{print $2}')
 
   if [[ $ttl -ge 0 && $ttl -le 64 ]]; then
     echo -e "\n$ip -> Linux"
@@ -55,6 +55,4 @@ function return_ttl_os_name(){
 
 return_ttl_os_name
 
-echo $(shred -uvz tmp.tmp)
-echo $(rm tmp.tmp)
 
